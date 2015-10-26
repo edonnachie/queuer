@@ -4,6 +4,7 @@ Title: A simple job scheduler for R
 Version: 0.1.20
 Author: Ewan Donnachie <ewan@donnachie.net>
 Maintainer: Ewan Donnachie <ewan@donnachie.net>
+URL: https:/github.com/edonnachie/queuer
 Description: A simple job scheduler for R to facilitate sequential batch processing, written entirely in base R with no dependencies (packages or external applications).
 License: GPL (>= 2)
 LazyData: TRUE
