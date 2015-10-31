@@ -11,11 +11,11 @@ sleep_until <- function(time){
   Sys.sleep(d)
 	invisible()
 }
-#' Sleep until a specified time within the next 24 hours
+#' Run a script immediately or at a specified time
 #'
 #' @param script Location of script, input to R CMD BATCH or source
 #' @param time Time in format HH:MM
-#' @param method How to run the script. Available options are "batch" (run using R CMD BATCH in a separate process), "rscript" (run using Rscript in a separate process) and "source" (source into current sesssion).
+#' @param method How to run the script. Available options are "batch" (run using R CMD BATCH in a separate process), "rscript" (run using Rscript in a separate process) and "source" (source into current sesssion). Otherwise, it is assumed that the string specifies the program to call via system (e.g. "python" or "perl")
 #' @param args String containing further arguments to pass to R CMD BATCH or Rscript, e.g. "--no-save". (ignored if sourcing). Default is NULL.
 #' @return Time (in seconds) taken by batch script to complete (if "now", run straigt away)
 #' @export
@@ -23,7 +23,7 @@ run_at <- function(script, time, method = "batch", args = NULL){
 	if(tolower(time) != "now") sleep_until(time)
 	t0 <- Sys.time()
   if(tolower(method) == "batch"){
-    system(paste0("R CMD BATCH ", args, script))
+    system(paste0("R CMD BATCH --no-save ", args, script))
   }
   if(tolower(method) == "rscript"){
     system(paste0("Rscript ", args, script))
@@ -31,5 +31,8 @@ run_at <- function(script, time, method = "batch", args = NULL){
 	if(tolower(method) == "source"){
     source(script)
   }
+	if(!(tolower(method) %in% c("batch", "rscript", "source"))){
+    system(paste0(method, args, script))
+	}
   return(difftime(Sys.time(), t0, units = "secs"))
 }
