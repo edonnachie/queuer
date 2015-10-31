@@ -1,11 +1,13 @@
 # queuer: A simple job scheduler and build system for R
-A simple job scheduler and build system for R, written entirely in base R with no dependencies (packages or external applications). 
+A simple job scheduler and build system for R, written entirely in base R with no dependencies (packages or external applications).
 
-Jobs (i.e. an R script to run) are defined using a simple R function and saved to an arbitrary queue file. A separate script is called (e.g. as a cron job) to run the jobs sequentially.
+queuer is based on three simple concepts:
 
-Alternatively, a build file may be created for a project, defining the jobs to be run and the prerequisites for each script. The `build` function can then be used to build all or part of the project.
+* A __job__ is a script to run (usually R script). Jobs are created using a simple R function `R create_job()`.
+* A __queue__ is a directory containing a queue file that lists jobs to be done. The queue file is processed by running `R process_queue("queue_file")`. This can be done using a system task scheduler (e.g. cron or Windows Task Scheduler).
+* Like a queue file, a __build file__ lists jobs to be done. Whereas a queue is intended for one-off processing, the purpose of a build file is to document the jobs that make up a project, capturing dependencies between the jobs. By calling the `R build()` function, a queue file is generated and the jobs processed, keeping the build file intact.
 
-__Project status:__ queuer is new under active development. The core functionality appears to work reliably (at least in a Windows environment) but further testing is necessary.
+__Project status:__ queuer has reached a stable development state and is used on a day-to-day basis. The core functionality appears to work reliably (at least in a Windows environment) but further testing is necessary.
 
 
 Why use queuer?
@@ -16,7 +18,8 @@ queuer has the following primary use cases:
 2. As a simple client-server solution. For example, jobs can be scheduled from a notebook and run automatically from a server.
 3. As a simple build system (like GNU Make) to bring order to a project, enabling multiple scripts to be run automatically in a defined order.
 
-The primary advantage of queuer is that it is written purely in base R. There are no package dependencies and no external software to install and configure. 
+The primary advantage of queuer is that it is written purely in base R. There are no package dependencies and no external software to install and configure.
+
 queuer is intended as a simple solution for single users or small groups of users. It is not intended as an enterprise solution (lacking security, scalability and auditing features) and is not a cluster management tool (such as LSF).
 
 
@@ -80,6 +83,5 @@ Alternative build systems:
 Work in progress
 ----------------
 
-* Schedule jobs to repeat at regular intervals (separate queue with additional repeat field)
-* Specify job dependencies and run jobs in the correct order
-* Test job success
+* Schedule jobs to repeat at regular intervals (separate schedule file with additional repeat field)
+* Test job success and process queue accordingly
