@@ -9,7 +9,7 @@ process_queue <- function(queue){
 
   while (nrow({jobs <- read_queue(queue)}) > 0){
     # Announce job
-    cat(Sys.time(), "\n")
+    cat(format(Sys.time()), "\n")
 
     # Run job
     job_out <- run_next_job(jobs, queue)
