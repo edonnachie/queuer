@@ -15,5 +15,14 @@ read_queue <- function(queue){
   } else {
     queue <- data.frame()
   }
+  
+  # Make sure all required fields are present,
+	# otherwise set to NA to preserve data structure
+	required_fields <- c("Name", "Script", "Wd", "Prerequisites", "Priority")
+	for(var in required_fields){
+		if (!(var %in% names(queue)))
+			queue[var] <- NA
+	}
+  
   return(queue)
 }
