@@ -10,6 +10,9 @@ next_job <- function(jobs){
   # Loop through jobs and select the first job
   # that has no dependencies in the queue
   for(j in 1:nrow(jobs_ordered)){
+    prereq <- jobs_ordered[j, "Prerequisites"]
+    if(is.na(prereq)) prereq <- ""
+    prereq <- as.character(strsplit(prereq , split = ",\\s?"))
     prereq <- as.character(strsplit(
       jobs_ordered[j, "Prerequisites"],
       split = ", "
