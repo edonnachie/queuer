@@ -1,14 +1,14 @@
 #' Give jobs specified in a control file, build a queue
 #'
-#' @param buildfile Buildfile in debian control format, containing fields "Script" (required) and (optional) "Name" and/or "Prerequisites". Further fields may be included, but will be ignored. In particular, and working directory specified will be overwritten by the wd arguement. Defailt is "build.dcf". If not present, the function will also look for "queuer/build.dcf". Otherweise, a custom file may be specified.
 #' @param jobs Character vector giving the names of the jobs to be run or a regular expression to match with name
+#' @param buildfile Buildfile in debian control format, containing fields "Script" (required) and (optional) "Name" and/or "Prerequisites". Further fields may be included, but will be ignored. In particular, and working directory specified will be overwritten by the wd arguement. Defailt is "build.dcf". If not present, the function will also look for "queuer/build.dcf". Otherweise, a custom file may be specified.
 #' @param wd Working directory from which to run the jobs. If null (default), use current working directory.
 #' @param queue Queue directory to add the jobs in cf to. If null (default), use a subdirectory "queuer" in the working directory.
 #' @param priority Priority with which the jobs should be run. Defaults: 3.
 #' @param process Should the queue be processed immediately? Default: No, if the queue is specified with the queue parameter (assume job is scheduled), otherwise yes.
 #' @export
-build <- function(buildfile = "build.dcf",
-                  jobs = NULL,
+build <- function(jobs = NULL,
+                  buildfile = "build.dcf",
                   wd = NULL,
                   queue = NULL,
                   priority = 3,
